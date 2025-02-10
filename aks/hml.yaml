@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-hml
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-hml
+  template:
+    metadata:
+      labels:
+        app: react-hml
+    spec:
+      containers:
+      - name: react-hml
+        image: alexvenite/react:{{tag}}
+        ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reactservice-hml
+spec:
+  selector:
+    app: react-hml
+  ports:
+    - protocol: TCP
+      port: 80  
+      targetPort: 3000  
+      #nodePort: 30080  
+  type: LoadBalancer
